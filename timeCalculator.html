@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Time Calculator</title>
+  </head>
+  <body>
+    <h1>Time Calculator</h1>
+	<h3>Please enter the start time:</h3>
+    <form>
+      <select id="hr1" name="hr1">
+	    <option value="12">12</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+		<option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+		<option value="11">11</option>
+      </select>
+	  <select id="mn1" name="mn1">
+        <option value="00">00</option>
+        <option value="15">15</option>
+        <option value="30">30</option>
+        <option value="45">45</option>
+      </select>
+      <!-- Time that is being added/subtracted -->
+	  <h3>Please enter the time change:</h3>
+	  <select id="hr2" name="hr2">
+	    <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+		<option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+		<option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+	  <select id="mn2" name="mn2">
+        <option value="00">00</option>
+        <option value="15">15</option>
+        <option value="30">30</option>
+        <option value="45">45</option>
+      </select>
+	  
+      <select id="operator" name="operator">
+        <option value="+">PLUS</option>
+        <option value="-">MINUS</option>
+      </select>
+      <br><br>
+      <input type="submit" value="Calculate">
+    </form>
+    <p id="result"></p>
+    <script>
+		document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const hr1 = parseInt(document.querySelector('#hr1').value);
+        const hr2 = parseInt(document.querySelector('#hr2').value);
+		const mn1 = parseInt(document.querySelector('#mn1').value);
+		const mn2 = parseInt(document.querySelector('#mn2').value);
+		
+        const operator = document.querySelector('#operator').value;
+        let result1 = (operator == "+") ? hr1 + hr2 : hr1 - hr2;
+		let result2 = (operator == "+") ? mn1 + mn2 : mn1 - mn2;
+		let timeDesc = (operator == "+") ? "later" : "earlier";
+		if (result2 < 0) {
+			result1 -= 1;
+			result2 += 60;
+		}
+		else if (result2 >= 60) {
+			result1 += 1;
+			result2 -= 60;
+		}
+		<!-- else {} -->
+		if (result1 == 0) { result1 += 12; }
+		
+		document.querySelector('#result').innerHTML = `
+			<b>Calculating Time..</b><br/><br/>
+			You entered ${hr1}:${mn1.toString().padStart(2, '0')}<br/><br/>
+			${hr2} hours and ${mn2} minutes ${timeDesc} is:<br/><br/>
+			${result1}:${result2.toString().padStart(2, '0')}`; });
+		
+    </script>
+  </body>
+</html>
